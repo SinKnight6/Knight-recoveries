@@ -227,6 +227,14 @@ bot.on('message', async function(message) {
       }
     }
   }
+  else if (isValidCommand(message, 'purge')) {
+      message.delete()
+      if(message.member.hasPermission('MANAGE_MESSAGES')) {
+      message.channel.bulkDelete(100)
+  } else {
+      message.reply("You don't have permission to use this command.");
+  }
+  }
 
 });
 
@@ -235,15 +243,6 @@ bot.on('message', async function(message) {
 bot.on("message", async message => {
   let args = message.content.substring(PREFIX.length).split(" ");
   if (message.author.bot) return;
-
-  if (message.content.toLowerCase() === '?clear' || message.content.toLowerCase() === '?purge') {
-    message.delete()
-    if(message.member.hasPermission('MANAGE_MESSAGES')) {
-    message.channel.bulkDelete(100)
-} else {
-    message.reply("You don't have permission to use this command.");
-}
-}
 
 if (message.content.startsWith('WEATHER') || (message.content.startsWith('weather'))){
   weather.find({search: args.join(" "), degreeType: 'F'}, function(err, result){
