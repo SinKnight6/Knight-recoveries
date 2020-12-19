@@ -9,6 +9,8 @@
   "author": "Knight",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^12.5.1"
+    "discord.js": "^12.5.1",
+    "weather-js": "^2.0.0"
   }
 }
+
