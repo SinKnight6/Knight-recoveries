@@ -234,6 +234,7 @@ bot.on('message', async function(message) {
   } else {
       message.reply("You don't have permission to use this command.");
   }
+
   } else if (isValidCommand(message, 'give')){
     message.delete()
     let roleid = message.guild.roles.cache.find(r => r.name === "Verified Customer");
@@ -247,7 +248,7 @@ bot.on('message', async function(message) {
         message.channel.send("You cannot add yourself to this role.");
     }
     else {
-      message.member.roles.add(roleid)
+      member.roles.add(roleid)
       .then(member => message.channel.send(`You added ${message.member.user} to this role`))
       .catch(err => {
         console.log(err);
