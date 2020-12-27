@@ -263,21 +263,52 @@ bot.on('message', async function(message) {
   if(message.member.hasPermission('ADMINISTRATOR')){
   let roleid = message.guild.roles.cache.find(r => r.name === "Verified Customer");
   let member = message.mentions.members.first();
-  if(roleid) {
-    if(member.roles.cache.has(roleid.id)) {
-    member.roles.remove(roleid)
-    .then(member => message.channel.send(`You have removed ${member} from ${roleid} role!`))
-    .catch(err => {
+      message.channel.send(`${message.author} Please stand by.
+Attempting to remove ${member} from the role <a:Loading:705280596217430019>`)
+  .then(sentMessage => sentMessage.delete({ timeout: 10000})
+ .catch(error => {
+  // Hnadler
+}))
+.then(() => {
+  message.channel.awaitMessages(response => response.content === '', {
+    max: 1,
+    time: 100,
+    errors: ['time'],
+  })
+  .then((collected) => {
+      message.channel.send(`The collected message was: ${collected.first().content}`);
+    })
+    .catch(() => {
+      let uEmbed6 = new Discord.MessageEmbed()
+    .setTitle('_ATTEMPT SUCCEEDED_')
+    .setColor(3066993)
+    .setDescription(`You have successfully removed ${member} from ${roleid} role!`)
+    message.channel.send({embed: uEmbed6})
+      .then(sentMessage => sentMessage.delete({ timeout: 6000})
+ .catch(error => {
+   console.log(error);
+   message.channel.send("Something went wrong")
+    }));
+  });
+});
+    if(roleid) {
+      if(member.roles.cache.has(roleid.id)) {
+    try {
+      setTimeout( async () => {
+      await member.roles.remove(roleid); }, 12000)
+      console.log('Role Removed!');
+    }
+    catch(err) {
       console.log(err);
-      message.channel.send("Something is wrong....");
-    });
+      }
+    }
   }
   }
   else {
     message.channel.send("Role was not found");
   }
 }
-}
+
 
 
 // Break
