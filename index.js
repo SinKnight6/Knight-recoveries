@@ -32,7 +32,6 @@ bot.on('message', async function(message) {
     let args = message.content.toLowerCase().substring(5);
     let roleNames = args.split(", ");
     let roleSet = new Set(roleNames);
-    let member = message.mentions.members.first();
     let { cache } = message.guild.roles;  
 
     roleSet.forEach(roleName => {
@@ -47,7 +46,6 @@ bot.on('message', async function(message) {
       }
       else {
         message.member.roles.add(role)
-        member.addRole(role).catch(console.error)
         .then(member => message.channel.send("You were added to this role!"))
         .catch(err => {
           console.log(err);
@@ -236,6 +234,31 @@ bot.on('message', async function(message) {
   } else {
       message.reply("You don't have permission to use this command.");
   }
+  } else if (isValidCommand(message,'give')){
+    let role = message.guild.roles.find(r => r.name === "Verified Customer");
+    let member = message.mentions.members.first();
+    member.addRole(role).catch(console.error);
+    member.removeRole(role).catch(console.error);
+    if(role) {
+      if(message.member.roles.cache.has(role.id)) {
+        message.channel.send(`This user already has the role`);
+        return;
+      }
+      if(checkPermissionRole(role)){
+          message.channel.send("You cannot add yourself to this role.");
+      }
+      else {
+        message.member.roles.add(role)
+        .then(member => message.channel.send("You were added to this role!"))
+        .catch(err => {
+          console.log(err);
+          message.channel.send("Something went wrong....");
+        });
+      }
+    } 
+    else {
+      message.channel.send("Role not found!");
+    }
   }
 
 });
