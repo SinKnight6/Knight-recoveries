@@ -2,6 +2,8 @@ const Discord = require("discord.js");
 
 const token = process.env.token;
 
+const colors = require("./colors.json");
+
 const weather = require('weather-js');
 
 const PREFIX = '!';
@@ -314,7 +316,7 @@ ${message.author} Please stand by.`)
     .catch(() => {
       let uEmbed6 = new Discord.MessageEmbed()
     .setTitle('_ATTEMPT SUCCEEDED_')
-    .setColor(3066993)
+    .setColor(colors.red)
     .setDescription(`You have successfully removed ${member} from ${roleid} role!`)
     message.channel.send({embed: uEmbed6})
       .then(sentMessage => sentMessage.delete({ timeout: 60000})
