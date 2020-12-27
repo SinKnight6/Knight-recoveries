@@ -263,7 +263,7 @@ ${message.author} please stand by.`)
         })
         .catch(() => {
           let uEmbed6 = new Discord.MessageEmbed()
-    .setTitle('_ATTEMPT SUCCEEDED_')
+    .setTitle('_Error_')
     .setColor(colors.orange)
     .setDescription(`${member} Already has this role!`)
     message.channel.send(uEmbed6) 
