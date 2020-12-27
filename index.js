@@ -265,10 +265,6 @@ bot.on('message', async function(message) {
   let member = message.mentions.members.first();
   if(roleid) {
     if(member.roles.cache.has(roleid.id)) {
-      message.channel.send(`${member} Does not have this role.`);
-      return;
-  }
-  else {
     member.roles.remove(roleid)
     .then(member => message.channel.send(`You have removed ${member} from ${roleid} role!`))
     .catch(err => {
