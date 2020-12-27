@@ -4,7 +4,7 @@ const token = process.env.token;
 
 const weather = require('weather-js');
 
-const PREFIX = '$';
+const PREFIX = '!';
 
 const bot = new Discord.Client();
 
@@ -236,13 +236,36 @@ bot.on('message', async function(message) {
   }
   } else if (isValidCommand(message, 'give')){
     message.delete()
-    if(message.member.hasPermission('ADMINISTRATOR')) {
-    let role = message.guild.roles.cache.find(r => r.name === "Verified Customer");
+    let roleid = message.guild.roles.cache.find(r => r.name === "Verified Customer");
     let member = message.mentions.members.first();
-    member.roles.add(role)
+    if(roleid) {
+      if(message.member.roles.cache.has(roleid.id)) {
+        message.channel.send("You already have this role!");
+        return;
+      }
+      if(checkPermissionRole(role)){
+        message.channel.send("You cannot add yourself to this role.");
+    }
+    else {
+      message.member.roles.add(roleid)
+      .then(member => message.channel.send(`You added ${message.member.user} to this role`))
+      .catch(err => {
+        console.log(err);
+        message.channel.send("Something is wrong....");
+      });
+    }
+    }
+    else {
+      message.channel.send("Role was not found");
+    }
   }
-}
 
+
+// Break
+
+
+
+// Break
 });
 
 // Break 
