@@ -279,7 +279,7 @@ ${message.author} please stand by.`)
         try {
           setTimeout( async () => {
           await member.roles.add(roleid); }, 10000)
-          console.log('Role Removed!')
+          console.log('Role Added!')
           .then (member => member.send('you were added to a role'))
           .catch(err => {
             console.log(err);
