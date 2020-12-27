@@ -247,7 +247,7 @@ bot.on('message', async function(message) {
     }
     else {
       member.roles.add(roleid)
-      .then(member => message.channel.send(`You added ${message.member.user} to this role`))
+      .then(member => message.channel.send(`You added ${message.author} to this role`))
       .catch(err => {
         console.log(err);
         message.channel.send("Something is wrong....");
