@@ -19,7 +19,7 @@ bot.on('ready', () => {
 
 const isValidCommand = (message, cmdName) => message.content.toLowerCase().startsWith(PREFIX + cmdName)
 const rollDice = () => Math.floor(Math.random() * 6) + 1;
-const checkPermissionRole = (perm) => role.permissions.has('ADMINISTRATOR') || role.permissions.has('KICK_MEMBERS') || 
+const checkPermissionRole = (role) => role.permissions.has('ADMINISTRATOR') || role.permissions.has('KICK_MEMBERS') || 
 role.permissions.has('BAN_MEMBERS') ||role.permissions.has('MANAGE_GUILD') ||role.permissions.has('MANAGE_CHANNELS')
 
 bot.on('message', async function(message) {
@@ -242,7 +242,9 @@ bot.on('message', async function(message) {
 
   } else if (isValidCommand(message, 'add role')){
     message.delete()
-    if(message.member.hasPermission('ADMINISTRATOR')){
+    if (!message.member.hasPermission(['ADMINISTRATOR'])){
+      message.channel.send("You don't have permission to use this command.");
+    } else {
     let roleid = message.guild.roles.cache.find(r => r.name === "Verified Customer");
     let member = message.mentions.members.first();
     if(roleid) {
@@ -321,7 +323,9 @@ ${message.author} please stand by.`)
   }
 } else if (isValidCommand(message, 'remove role')){
   message.delete()
-  if(message.member.hasPermission('ADMINISTRATOR')){
+  if (!message.member.hasPermission(['ADMINISTRATOR'])){
+    message.channel.send("You don't have permission to use this command.");
+  } else {
   let roleid = message.guild.roles.cache.find(r => r.name === "Verified Customer");
   let member = message.mentions.members.first();
       message.channel.send(`Attempting to remove ${member} from the role <a:Newloading:790047698995642429>
@@ -362,13 +366,13 @@ ${message.author} Please stand by.`)
     catch(err) {
       console.log(err);
       message.channel.send("Something went wrong")
-      }
     }
   }
   }
   else {
     message.channel.send("Role was not found");
   }
+}
 }
 
 
