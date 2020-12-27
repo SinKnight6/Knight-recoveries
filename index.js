@@ -115,7 +115,7 @@ bot.on('message', async function(message) {
   else if (isValidCommand(message, "say")) {
     message.delete()
     let announcement = message.content.substring(5);
-    let announcementsChannel = bot.channels.cache.get('789337633591263277');
+    let announcementsChannel = bot.channels.cache.get('792894284260966441');
     let genralChannel = bot.channels.cache.find(channel => channel.name.toLowerCase() === '『💬』general');
     let embed = new Discord.MessageEmbed();
     if(announcementsChannel)
