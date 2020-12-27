@@ -27,7 +27,7 @@ bot.on('message', async function(message) {
     message.reply('Hello!');
   else if(isValidCommand(message, 'rolldice')) 
     message.reply('rolled a ' + rollDice());
-  else if(isValidCommand(message, 'add')) {
+  /*else if(isValidCommand(message, 'add')) {
     message.delete()
     let args = message.content.toLowerCase().substring(5);
     let roleNames = args.split(", ");
@@ -85,8 +85,9 @@ bot.on('message', async function(message) {
     }
 
     });
+    
 
-  }
+  } */
   else if (isValidCommand(message, "embed")) {
     let embedContent = message.content.substring(7);
     // let embed = new Discord.MessageEmbed();
@@ -144,6 +145,7 @@ bot.on('message', async function(message) {
         }
         else {
           console.log("Banned did not happen.");
+          message.channel.send(`${member} was kicked`)
         }
       }
       catch(err) {
@@ -162,6 +164,7 @@ bot.on('message', async function(message) {
       if (member) {
         try {
           await member.kick();
+          message.channel.send(`${member} was kicked`)
           console.log(' A member was kicked. ')
         }
         catch(err) {
@@ -187,7 +190,7 @@ bot.on('message', async function(message) {
           let mutedRole = message.guild.roles.cache.get('789337632899334191');
           if (mutedRole) {
             member.roles.add(mutedRole);
-            message.channel.send("User was muted.");
+            message.channel.send(`${member}was muted.`);
           }
           else {
             message.channel.send("Muted role not found.");
@@ -235,7 +238,7 @@ bot.on('message', async function(message) {
       message.reply("You don't have permission to use this command.");
   }
 
-  } else if (isValidCommand(message, 'give')){
+  } else if (isValidCommand(message, 'add role')){
     message.delete()
     if(message.member.hasPermission('ADMINISTRATOR')){
     let roleid = message.guild.roles.cache.find(r => r.name === "Verified Customer");
@@ -246,19 +249,55 @@ bot.on('message', async function(message) {
         return;
     }
     else {
-      member.roles.add(roleid)
-      .then(member => message.channel.send(`You added ${member} to ${roleid} role!`))
-      .catch(err => {
-        console.log(err);
-        message.channel.send("Something is wrong....");
-      });
-    }
+      message.channel.send(`Attempting to add ${member} to the role <a:Newloading:790047698995642429>
+${message.author} please stand by.`)
+      .then(sentMessage => sentMessage.delete({ timeout: 10000 })
+      .catch(error => {
+      }))
+      .then(() => {
+        message.channel.awaitMessages(response => response.content === '', {
+          max: 1,
+          time: 100,
+          errors: ['time'],
+        })
+        .then((collected) => {
+          message.channel.send(`The collected message was:`);
+        })
+        .catch(() => {
+          let uEmbed6 = new Discord.MessageEmbed()
+    .setTitle('_ATTEMPT SUCCEEDED_')
+    .setColor(3066993)
+    .setDescription(`You have successfully added ${member} to ${roleid} role!`)
+    message.channel.send({embed: uEmbed6})
+      .then(sentMessage => sentMessage.delete({ timeout: 60000})
+ .catch(error => {
+   console.log(error);
+   message.channel.send("Something went wrong")
+        }));
+        });
+        })
+        {
+          try {
+          setTimeout( async () => {
+          await member.roles.remove(roleid); }, 10000)
+          console.log('Role Removed!')
+          .then (member => member.send('you were added to a role'))
+          .catch(err => {
+            console.log(err);
+            message.channel.send("Something is wrong....");
+          });
+        }
+        catch(err) {
+          console.log(err);
+          }
+        }
+      }
     }
     else {
       message.channel.send("Role was not found");
     }
   }
-} else if (isValidCommand(message, 'remove')){
+} else if (isValidCommand(message, 'remove role')){
   message.delete()
   if(message.member.hasPermission('ADMINISTRATOR')){
   let roleid = message.guild.roles.cache.find(r => r.name === "Verified Customer");
@@ -296,7 +335,12 @@ ${message.author} Please stand by.`)
     try {
       setTimeout( async () => {
       await member.roles.remove(roleid); }, 10000)
-      console.log('Role Removed!');
+      console.log('Role Removed!')
+      .then (member => member.send('you were added to a role'))
+      .catch(err => {
+        console.log(err);
+        message.channel.send("Something is wrong....");
+      });
     }
     catch(err) {
       console.log(err);
