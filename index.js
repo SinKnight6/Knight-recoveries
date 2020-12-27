@@ -247,8 +247,34 @@ bot.on('message', async function(message) {
     let member = message.mentions.members.first();
     if(roleid) {
       if(member.roles.cache.has(roleid.id)) {
-        message.channel.send(`${member} Already has this role!`);
-        return;
+        message.channel.send(`Attempting to add ${member} to the role <a:Newloading:790047698995642429>
+${message.author} please stand by.`)
+      .then(sentMessage => sentMessage.delete({ timeout: 10000 })
+      .catch(error => {
+      }))
+      .then(() => {
+        message.channel.awaitMessages(response => response.content === '', {
+          max: 1,
+          time: 100,
+          errors: ['time'],
+        })
+        .then((collected) => {
+          message.channel.send(`The collected message was: ${collected.first().content}`);
+        })
+        .catch(() => {
+          let uEmbed6 = new Discord.MessageEmbed()
+    .setTitle('_ATTEMPT SUCCEEDED_')
+    .setColor(colors.orange)
+    .setDescription(`${member} Already has this role!`)
+    message.channel.send(uEmbed6) 
+      .then(sentMessage => sentMessage.delete({ timeout: 60000})
+ .catch(error => {
+   console.log(error);
+   message.channel.send("Something went wrong")
+          return;
+        }));
+        });
+      });
     }
     else {
       message.channel.send(`Attempting to add ${member} to the role <a:Newloading:790047698995642429>
