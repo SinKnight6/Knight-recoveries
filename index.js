@@ -235,7 +235,7 @@ bot.on('message', async function(message) {
       message.reply("You don't have permission to use this command.");
   }
   } else if (isValidCommand(message,'give')){
-    let role = message.guild.roles.find(r => r.name === "Verified Customer");
+    let role = cache.find(role => role.name.toLowerCase() === roleName);
     let member = message.mentions.members.first();
     member.addRole(role).catch(console.error);
     member.removeRole(role).catch(console.error);
