@@ -263,8 +263,8 @@ bot.on('message', async function(message) {
   if(message.member.hasPermission('ADMINISTRATOR')){
   let roleid = message.guild.roles.cache.find(r => r.name === "Verified Customer");
   let member = message.mentions.members.first();
-      message.channel.send(`${message.author} Please stand by.
-Attempting to remove ${member} from the role <a:Loading:705280596217430019>`)
+      message.channel.send(`Attempting to remove ${member} from the role <a:Newloading:790047698995642429>
+${message.author} Please stand by.`)
   .then(sentMessage => sentMessage.delete({ timeout: 10000})
  .catch(error => {
   // Hnadler
@@ -284,7 +284,7 @@ Attempting to remove ${member} from the role <a:Loading:705280596217430019>`)
     .setColor(3066993)
     .setDescription(`You have successfully removed ${member} from ${roleid} role!`)
     message.channel.send({embed: uEmbed6})
-      .then(sentMessage => sentMessage.delete({ timeout: 6000})
+      .then(sentMessage => sentMessage.delete({ timeout: 60000})
  .catch(error => {
    console.log(error);
    message.channel.send("Something went wrong")
@@ -295,7 +295,7 @@ Attempting to remove ${member} from the role <a:Loading:705280596217430019>`)
       if(member.roles.cache.has(roleid.id)) {
     try {
       setTimeout( async () => {
-      await member.roles.remove(roleid); }, 12000)
+      await member.roles.remove(roleid); }, 10000)
       console.log('Role Removed!');
     }
     catch(err) {
