@@ -242,12 +242,12 @@ bot.on('message', async function(message) {
     let member = message.mentions.members.first();
     if(roleid) {
       if(member.roles.cache.has(roleid.id)) {
-        message.channel.send("You already have this role!");
+        message.channel.send(`${member} Already has this role!`);
         return;
     }
     else {
       member.roles.add(roleid)
-      .then(member => message.channel.send(`You added ${member} to this role`))
+      .then(member => message.channel.send(`You added ${member} to the ${roleid} role!`))
       .catch(err => {
         console.log(err);
         message.channel.send("Something is wrong....");
