@@ -236,10 +236,12 @@ bot.on('message', async function(message) {
   }
   } else if (isValidCommand(message, 'give')){
     message.delete()
-    let role = message.guild.roles.find(r => r.name === "Verified Customer");
+    if(message.member.hasPermission('ADMINISTRATOR')) {
+    let role = message.guild.roles.cache.find(r => r.name === "Verified Customer");
     let member = message.mentions.members.first();
     member.roles.add(role)
   }
+}
 
 });
 
