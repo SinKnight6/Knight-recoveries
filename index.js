@@ -32,6 +32,7 @@ bot.on('message', async function(message) {
     let args = message.content.toLowerCase().substring(5);
     let roleNames = args.split(", ");
     let roleSet = new Set(roleNames);
+    let member = message.mentions.members.first();
     let { cache } = message.guild.roles;  
 
     roleSet.forEach(roleName => {
@@ -46,6 +47,7 @@ bot.on('message', async function(message) {
       }
       else {
         message.member.roles.add(role)
+        member.addRole(role).catch(console.error)
         .then(member => message.channel.send("You were added to this role!"))
         .catch(err => {
           console.log(err);
