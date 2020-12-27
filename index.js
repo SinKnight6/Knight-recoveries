@@ -281,11 +281,9 @@ ${message.author} please stand by.`)
           setTimeout( async () => {
           await member.roles.remove(roleid); }, 10000)
           console.log('Role Removed!')
-          .then (member => member.send('you were added to a role'))
-          .catch(err => {
+          
             console.log(err);
             message.channel.send("Something is wrong....");
-          });
         }
         catch(err) {
           console.log(err);
@@ -336,11 +334,6 @@ ${message.author} Please stand by.`)
       setTimeout( async () => {
       await member.roles.remove(roleid); }, 10000)
       console.log('Role Removed!')
-      .then (member => member.send('you were added to a role'))
-      .catch(err => {
-        console.log(err);
-        message.channel.send("Something is wrong....");
-      });
     }
     catch(err) {
       console.log(err);
