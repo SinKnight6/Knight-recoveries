@@ -17,7 +17,7 @@ bot.on('ready', () => {
 
 const isValidCommand = (message, cmdName) => message.content.toLowerCase().startsWith(PREFIX + cmdName)
 const rollDice = () => Math.floor(Math.random() * 6) + 1;
-const checkPermissionRole = (role) => role.permissions.has('ADMINISTRATOR') || role.permissions.has('KICK_MEMBERS') || 
+const checkPermissionRole = (perm) => role.permissions.has('ADMINISTRATOR') || role.permissions.has('KICK_MEMBERS') || 
 role.permissions.has('BAN_MEMBERS') ||role.permissions.has('MANAGE_GUILD') ||role.permissions.has('MANAGE_CHANNELS')
 
 bot.on('message', async function(message) {
@@ -237,15 +237,13 @@ bot.on('message', async function(message) {
 
   } else if (isValidCommand(message, 'give')){
     message.delete()
+    if(message.member.hasPermission('ADMINISTRATOR')){
     let roleid = message.guild.roles.cache.find(r => r.name === "Verified Customer");
     let member = message.mentions.members.first();
     if(roleid) {
       if(message.member.roles.cache.has(roleid.id)) {
         message.channel.send("You already have this role!");
         return;
-      }
-      if(message.member.hasPermission('ADMINISTRATOR')){
-        message.channel.send("You cannot add yourself to this role.");
     }
     else {
       member.roles.add(roleid)
@@ -260,6 +258,7 @@ bot.on('message', async function(message) {
       message.channel.send("Role was not found");
     }
   }
+}
 
 
 // Break
