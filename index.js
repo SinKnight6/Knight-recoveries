@@ -234,71 +234,14 @@ bot.on('message', async function(message) {
   } else {
       message.reply("You don't have permission to use this command.");
   }
-  } else if (isValidCommand(message,'give')){
-    let args = message.content.toLowerCase().substring(5);
-    let roleNames = args.split(", ");
-    let roleSet = new Set(roleNames);
-    let { cache } = message.guild.roles;
-    let member = message.mentions.members.first();
-  
-
-    roleSet.forEach(roleName => {
-      let role = cache.find(role => role.name.toLowerCase() === roleName);
-    if(role) {
-      if(message.member.roles.cache.has(role.id)) {
-        message.channel.send("You already have this role!");
-        return;
-      }
-      if(checkPermissionRole(role)){
-          message.channel.send("You cannot add yourself to this role.");
-      }
-      else {
-        member.addRole(role).catch(role)
-        .then(member => message.channel.send("You were added to this role!"))
-        .catch(err => {
-          console.log(err);
-          message.channel.send("Something went wrong....");
-        });
-      }
-    } 
-    else {
-      message.channel.send("Role not found!");
-    }
-
-    });
-    
-  } 
-  else if(isValidCommand(message, "del")) {
+  } else if (isValidCommand(message, 'give')){
     message.delete()
-  let args = message.content.toLowerCase().substring(5);
-  let roleNames = args.split(", ");
-  let roleSet = new Set(roleNames);
-  let { cache } = message.guild.roles; 
-  let member = message.mentions.members.first();
-
-  roleSet.forEach(roleName => {
-    let role = cache.find(role => role.name.toLowerCase() === roleName);
-  if(role) {
-    if(message.member.roles.cache.has(role.id)) {
-      member.removeRole(role).catch(role)
-      .then(member => message.channel.send("You were removed from this role!"))
-      .catch(err => {
-        console.log(err);
-        message.channel.send("Something went wrong....");
-      });
-    
-    }
-  } 
-  else {
-    message.channel.send("Role not found!");
+    let role = message.guild.roles.find(r => r.name === "Verified Customer");
+    let member = message.mentions.members.first();
+    member.roles.add(role)
   }
 
-  });
-
-}
-
 });
-
 
 // Break 
 
