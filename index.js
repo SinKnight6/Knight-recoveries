@@ -241,7 +241,7 @@ bot.on('message', async function(message) {
     let roleid = message.guild.roles.cache.find(r => r.name === "Verified Customer");
     let member = message.mentions.members.first();
     if(roleid) {
-      if(message.member.roles.cache.has(roleid.id)) {
+      if(member.roles.cache.has(roleid.id)) {
         message.channel.send("You already have this role!");
         return;
     }
