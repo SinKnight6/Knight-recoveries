@@ -261,7 +261,7 @@ ${message.author} please stand by.`)
           errors: ['time'],
         })
         .then((collected) => {
-          message.channel.send(`The collected message was:`);
+          message.channel.send(`The collected message was: ${collected.first().content}`);
         })
         .catch(() => {
           let uEmbed6 = new Discord.MessageEmbed()
