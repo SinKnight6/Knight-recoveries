@@ -247,7 +247,7 @@ bot.on('message', async function(message) {
     }
     else {
       member.roles.add(roleid)
-      .then(member => message.channel.send(`You added ${member} to the ${roleid} role!`))
+      .then(member => message.channel.send(`You added ${member} to ${roleid} role!`))
       .catch(err => {
         console.log(err);
         message.channel.send("Something is wrong....");
@@ -258,6 +258,29 @@ bot.on('message', async function(message) {
       message.channel.send("Role was not found");
     }
   }
+} else if (isValidCommand(message, 'remove')){
+  message.delete()
+  if(message.member.hasPermission('ADMINISTRATOR')){
+  let roleid = message.guild.roles.cache.find(r => r.name === "Verified Customer");
+  let member = message.mentions.members.first();
+  if(roleid) {
+    if(member.roles.cache.has(roleid.id)) {
+      message.channel.send(`${member} Does not have this role.`);
+      return;
+  }
+  else {
+    member.roles.remove(roleid)
+    .then(member => message.channel.send(`You have removed ${member} from ${roleid} role!`))
+    .catch(err => {
+      console.log(err);
+      message.channel.send("Something is wrong....");
+    });
+  }
+  }
+  else {
+    message.channel.send("Role was not found");
+  }
+}
 }
 
 
