@@ -244,7 +244,7 @@ bot.on('message', async function(message) {
         message.channel.send("You already have this role!");
         return;
       }
-      if(checkPermissionRole(role)){
+      if(message.member.hasPermission('ADMINISTRATOR')){
         message.channel.send("You cannot add yourself to this role.");
     }
     else {
