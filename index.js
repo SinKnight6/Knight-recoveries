@@ -34,7 +34,7 @@ bot.on('message', async function(message) {
     embed.addField('**Announcement**', countent);
     embed.setColor(000000);
     embed.setFooter('Announced by Staff')
-    genralChannel.send(embed);
+    message.send(genralChannel);
   }
 
   if(isValidCommand(message, 'hello'))
