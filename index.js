@@ -25,9 +25,9 @@ role.permissions.has('BAN_MEMBERS') ||role.permissions.has('MANAGE_GUILD') ||rol
 bot.on('message', async function(message) {
   if(message.author.bot) return;
 
-  if (message.content.toLowerCase() === '$say') {
+  if(isValidCommand(message, '@say')) {
     message.delete()
-    let countent = message.content.substring(5);
+    let countent = message.content.substring(6);
     let genralChannel = bot.channels.cache.find(channel => channel.name.toLowerCase() === '『📢』annoucement');
     let embed = new Discord.MessageEmbed();
     if(genralChannel)
