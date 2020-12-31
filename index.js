@@ -25,6 +25,18 @@ role.permissions.has('BAN_MEMBERS') ||role.permissions.has('MANAGE_GUILD') ||rol
 bot.on('message', async function(message) {
   if(message.author.bot) return;
 
+  if (message.content.toLowerCase() === '$say') {
+    message.delete()
+    let announcement = message.content.substring(5);
+    let genralChannel = bot.channels.cache.find(channel => channel.name.toLowerCase() === '『📢』annoucement');
+    let embed = new Discord.MessageEmbed();
+    if(genralChannel)
+    embed.addField('**Announcement**', announcement);
+    embed.setColor(000000);
+    embed.setFooter('Announced by Staff')
+    genralChannel.send(embed);
+  }
+  
   if(isValidCommand(message, 'hello'))
     message.reply('Hello!');
   else if(isValidCommand(message, 'rolldice')) 
@@ -372,16 +384,6 @@ ${message.author} Please stand by.`)
     message.channel.send("Role was not found");
   }
 }
-} else if (message.content.toLowerCase() === '$say') {
-  message.delete()
-  let announcement = message.content.substring(5);
-  let genralChannel = bot.channels.cache.find(channel => channel.name.toLowerCase() === '『📢』annoucement');
-  let embed = new Discord.MessageEmbed();
-  if(genralChannel)
-  embed.addField('**Announcement**', announcement);
-  embed.setColor(000000);
-  embed.setFooter('Announced by Staff')
-  genralChannel.send(embed);
 }
 
 
